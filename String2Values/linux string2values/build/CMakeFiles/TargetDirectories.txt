@@ -1,0 +1,1 @@
+/home/james/Dropbox/Sensor Nodes/Linux String2Values/build/CMakeFiles/string2val.dir

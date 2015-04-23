@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/sensorNode.dir/main.cpp.o CMakeFiles/sensorNode.dir/LINKSSensorNode.cpp.o CMakeFiles/sensorNode.dir/serialib.cpp.o  -o sensorNode -rdynamic 

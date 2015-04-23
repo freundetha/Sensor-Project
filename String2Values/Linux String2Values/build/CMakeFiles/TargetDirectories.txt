@@ -1,0 +1,1 @@
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/build/CMakeFiles/sensorNode.dir

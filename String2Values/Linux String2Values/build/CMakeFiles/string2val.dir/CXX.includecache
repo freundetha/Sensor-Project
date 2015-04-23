@@ -1,0 +1,58 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/LINKSSensorNode.h
+string
+-
+iostream
+-
+
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/main.cpp
+LINKSSensorNode.h
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/LINKSSensorNode.h
+serialib.h
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/serialib.h
+serialib.cpp
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/serialib.cpp
+stdio.h
+-
+string.h
+-
+string
+-
+iostream
+-
+
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/serialib.cpp
+serialib.h
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/serialib.h
+
+/home/gupta/Desktop/Untitled Folder/String2Values/Linux String2Values/serialib.h
+sys/time.h
+-
+windows.h
+-
+stdlib.h
+-
+sys/types.h
+-
+sys/shm.h
+-
+termios.h
+-
+string.h
+-
+iostream
+-
+fcntl.h
+-
+unistd.h
+-
+sys/ioctl.h
+-
+

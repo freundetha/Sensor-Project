@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/james/Dropbox/Sensor Nodes/Linux String2Values/LINKSSensorNode.h
+string
+-
+iostream
+-
+
+/home/james/Dropbox/Sensor Nodes/Linux String2Values/main.cpp
+LINKSSensorNode.h
+/home/james/Dropbox/Sensor Nodes/Linux String2Values/LINKSSensorNode.h
+string
+-
+iostream
+-
+
