@@ -5,6 +5,7 @@
 
 
 
+
 //constructor
 LINKSSensorNode::LINKSSensorNode(std::string loc, int baud, int num_devices[], int num_devices_size)
 {
@@ -71,6 +72,185 @@ int LINKSSensorNode::toggleUsonic()
 	Serial.Close();
 			
 	return 0;
+
+}
+
+
+
+int LINKSSensorNode::writeFile()
+{
+
+//write data onto file in this format
+// u1,u2,u3,u4,u5,....p1,p2,p3 \n
+//###.##,###.##,###.##,....#,#,#,#,#    then write time: H/M/S/MS\n
+//append data to end of file
+//overwrite file if overwrite == 1
+//if filename == :P, write file name as "sensor node Day/Month/Year"
+
+
+
+  time_t currentTime;
+  struct tm *localTime;
+
+  time( &currentTime );                   // Get the current time
+  localTime = localtime( &currentTime );  // Convert the current time to the local time
+
+  int Day    = localTime->tm_mday;
+  int Month  = localTime->tm_mon + 1;
+  int Year   = localTime->tm_year + 1900;
+  int Hour   = localTime->tm_hour;
+  int Min    = localTime->tm_min;
+  int Sec    = localTime->tm_sec;
+
+    
+
+	std::string filename;
+	filename = std::to_string(Year) + "_" + std::to_string(Month)+ "_" + std::to_string(Day) + "_" + std::to_string(Hour) + "_" + std::to_string(Min) + ".csv";
+		
+	  
+
+ 	std::fstream myfile;
+      
+        //myfile.open();
+	
+	
+	
+	myfile.open(filename, std::ios::app);
+
+	myfile.seekp(0,std::ios::end);	//this will check if file is empty. If empty, it will print out the format of the data
+	size_t size = myfile.tellg();
+	if( size == 0)
+	{
+			
+		for (int i = 0; i < size_usonic; i++)
+		{
+		myfile << "u" << i << ",";	 //print out u0,u1...u#
+		}	 
+   	
+		for (int i = 0; i < size_usonic; i++)
+		{
+		myfile << "p" << i << ",";	
+		}	
+		myfile << "H:M:S";	
+        	myfile << std::endl;
+	
+		
+	}
+  		
+	
+
+      
+
+   	
+
+   	for (int i = 0; i < size_usonic; i++)
+	{
+		myfile << usonic[i] << ",";	
+		
+	}	 
+   	
+	for (int i = 0; i < size_usonic; i++)
+	{
+		myfile << pir[i] << ",";	
+	}	
+		//print H:MM:SS
+	myfile << " " << Hour << ":" << Min << ":" <<  Sec << std::endl;
+	
+	 
+	
+	myfile.close();
+	
+
+	return 0;
+	
+}
+
+int LINKSSensorNode::writeFile(std::string filename , bool overwrite)
+{
+
+//write data onto file in this format
+// u1,u2,u3,u4,u5,....p1,p2,p3 \n
+//###.##,###.##,###.##,....#,#,#,#,#    then write time: H/M/S/MS\n
+//append data to end of file
+//overwrite file if overwrite == 1
+
+
+	//These are all the time value necessary for creating the file name
+	time_t currentTime;
+  	struct tm *localTime;
+
+  	 time( &currentTime );                   // Get the current time
+ 	 localTime = localtime( &currentTime );  // Convert the current time to the local time
+
+	  int Day    = localTime->tm_mday;
+	  int Month  = localTime->tm_mon + 1;
+	  int Year   = localTime->tm_year + 1900;
+	  int Hour   = localTime->tm_hour;
+	  int Min    = localTime->tm_min;
+	  int Sec    = localTime->tm_sec;
+
+    
+
+
+ 	std::fstream myfile;
+      
+        //myfile.open();
+	 
+	
+	
+  		//begin the new file by writing to it the form of the output, which here will be:
+		// u0,u1,u2,u3,u4
+	myfile.open(filename, std::ios::app);
+	
+	myfile.seekp(0,std::ios::end);
+	size_t size = myfile.tellg();
+	if( size == 0)
+	{
+		
+		for (int i = 0; i < size_usonic; i++)
+		{
+		myfile << "u" << i << ",";	
+		}	 
+   	
+		for (int i = 0; i < size_usonic; i++)
+		{
+		myfile << "p" << i << ",";	
+		}	
+		myfile << "H:M:S";
+        	myfile << std::endl;
+		
+	}
+  		
+       
+	
+	
+   	
+
+   	for (int i = 0; i < size_usonic; i++)
+	{
+		myfile << usonic[i] << ",";	
+	}	 
+   	
+	for (int i = 0; i < size_usonic; i++)
+	{
+		myfile << pir[i] << ",";	
+	}	
+		//print H:MM:SS
+	myfile << " " << Hour << ":" << Min << ":" <<  Sec << std::endl;
+	
+	 
+	
+	myfile.close();
+	
+
+	return 0;
+	
+}
+
+bool  LINKSSensorNode::fileExists(const char *fileName)
+{
+    std::ifstream infile(fileName);
+    return infile.good();
 
 }
 
@@ -364,18 +544,32 @@ int LINKSSensorNode::refresh()
 
 void LINKSSensorNode::printstatus(void)
 {
+   
+
+   
+   
+		
+  	
+
 	std::cout << "Sensor Node Status on " << nodeLocation << std::endl;
 	//first usonic
 	for (int i = 0; i < size_usonic; i++)
 	{
+		
 		std::cout << "usonic" << i << ": " << usonic[i] << std::endl;
 	}
 	for (int i = 0; i < size_pir; i++)
 	{
+    		
 		std::cout << "pir" << i << ": " << pir[i] << std::endl;
 	}
 	for (int i = 0; i < size_laser; i++)
 	{
+		
 		std::cout << "laser" << i << ": " << laser[i] << std::endl;
 	}
+	
+   		
+   
+      
 }

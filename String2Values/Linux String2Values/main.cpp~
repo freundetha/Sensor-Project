@@ -7,6 +7,7 @@ node microcontroller) into a set of doubles for each sensor.
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <fstream>
 
 //test strings. Obviously this would come from the microcontroller
 int num_usonic_node0 = 8;
@@ -51,20 +52,23 @@ int count = 0;
 		
 		node0.refresh();
 		node0.printstatus();
-	
-		if (count%100 ==0)
+		//node0.writeFile("test1.txt",false); 
+		node0.writeFile();
+		/*
+		if (count%100 == 0)
 		{
 			 node0.togglePIR();
 	 	
 		}
 	
-	 	if (count%200 ==0)
+	 	if (count%200 == 0)
 		{
 			 node0.toggleUsonic();
 	 	
 		}
-	 
-	 	count++;	
+	       */
+	 	count++;
+		std::cout << "/n" << count << "/n" << std::endl;	
 	}
 
 	

@@ -6,12 +6,54 @@
 #include <string.h>
 #include <iostream>
 #include "serialib.h"
+#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+#include <time.h>
+#include <sys/stat.h>
 
 
 const int ASCII2NUM = 48;
 
 class LINKSSensorNode
 {
+      
+	
+	
+public:
+
+
+	
+	//constructor
+        LINKSSensorNode();
+	LINKSSensorNode(std::string loc, int baud, int num_devices[], int num_devices_size);
+	LINKSSensorNode(std::string loc, int baud, int num_devices[], int num_devices_size, std::string name);	//pointers for holding sensor data after it is parsed from string
+	
+	int refresh();
+
+	int togglePIR();	//sends 'P' to toggle pir
+
+	int toggleUsonic();	//sends 'U' to toggle usonic
+	bool fileExists(const char *fileName);
+	//function to print sensor values
+	void printstatus(void);
+	int writeFile(std::string filename,bool overwrite); 
+	int writeFile(); 
+
+	int size_usonic;
+	float * usonic;
+	int size_laser;
+	float * laser;
+	int size_pir;
+	int * pir;
+	bool statePIR;
+	bool stateUSONIC;
+	int Ret;
+	std::string nodeName; // unique name for sensor node
+	//function for refreshing the latest sensor data. note normally this function would have
+	//no input argument and would interface with serialib directly to get the new string.	
+
 	static const char PIR_TOGGLE = 'p';
 	static const char USONIC_TOGGLE = 'u';
 	static const char START = '~';
@@ -26,31 +68,7 @@ class LINKSSensorNode
 	std::string nodeLocation;
 	int nodeBaud;
 	serialib Serial;   //class instantiation of serial lib
-	
-public:
-	//pointers for holding sensor data after it is parsed from string
-	int size_usonic;
-	float * usonic;
-	int size_laser;
-	float * laser;
-	int size_pir;
-	int * pir;
-	bool statePIR;
-	bool stateUSONIC;
-	int Ret;
-	//function for refreshing the latest sensor data. note normally this function would have
-	//no input argument and would interface with serialib directly to get the new string.
-	int refresh();
 
-	int togglePIR();	//sends 'P' to toggle pir
-
-	int toggleUsonic();	//sends 'U' to toggle usonic
-
-	//function to print sensor values
-	void printstatus(void);
-
-	//constructor
-	LINKSSensorNode(std::string loc, int baud, int num_devices[], int num_devices_size);
 };
 
 
